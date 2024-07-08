@@ -1,6 +1,6 @@
 // backend/routes/adminRoutes.ts
 import express from 'express';
-import { registerAdmin, loginAdmin } from '../services/authService';
+import { registerAdmin, loginUser } from '../services/authService';
 import { getAdmins, getAdminById, deleteAdmin } from '../controllers/adminController';
 import { adminAuth } from '../middleware/authMiddleware';
 
@@ -13,10 +13,9 @@ router.get('/dashboard', adminAuth, (req, res) => {
 });
 
 router.post('/register', registerAdmin);
-router.post('/login', loginAdmin);
 
-router.get('/', adminAuth, getAdmins);
 router.get('/:id', adminAuth, getAdminById);
+router.get('/', adminAuth, getAdmins);
 router.delete('/:id', adminAuth, deleteAdmin);
 
 export default router;
