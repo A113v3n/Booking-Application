@@ -96,18 +96,19 @@ export const registerAttendant = async (req: Request, res: Response) => {
 
 // Client Registration
 export const registerClient = async (req: Request, res: Response) => {
-  const { firstName, lastName, email, password, phoneNumber } = req.body;
+  const { firstName, lastName, email, password, phoneNumber, pregnant, pressurePreference, painArea } = req.body;
 
-  if (!email || !password || !firstName || !lastName || !phoneNumber) {
-    return res.status(400).json({ message: 'All fields are required' });
-  }
+    // Validate required fields
+    if (!email || !password || !firstName || !lastName || pregnant === undefined || !pressurePreference) {
+      return res.status(400).json({ message: 'All fields are required' });
+    }
 
   try {
     const existingClient = await Client.findOne({ email });
     if (existingClient) return res.status(400).json({ message: 'Client already exists' });
 
     const hashedPassword = await bcrypt.hash(password, 12);
-    const newClient = new Client({ firstName, lastName, email, password: hashedPassword, phoneNumber, role: 'client' });
+    const newClient = new Client({ firstName, lastName, email, password: hashedPassword, phoneNumber, pregnant, pressurePreference, painArea, role: 'client' });
     await newClient.save();
 
     const token = generateToken(newClient._id.toString(), newClient.role);

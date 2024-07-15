@@ -8,6 +8,9 @@ export interface IClient extends Document {
   email: string;
   password: string;
   phoneNumber: string;
+  pregnant: boolean;
+  pressurePreference: 'Light' | 'Medium' | 'Deep';
+  painArea: string[];
   role: string;
 }
 
@@ -17,6 +20,9 @@ const ClientSchema: Schema = new Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   phoneNumber: { type: String, required: true },
+  pregnant: { type: Boolean, required: true },
+  pressurePreference: { type: String, enum: ['Light', 'Medium', 'Deep'], required: true },
+  painArea: { type: [String], required: true },
   role: { type: String, default: 'client' },
 });
 

@@ -22,7 +22,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
       />
       <Button
         title="Register"
-        onPress={() => navigation.navigate('Register')}
+        onPress={() => navigation.navigate('BasicInfo')}
       />
     </View>
   );
