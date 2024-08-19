@@ -10,15 +10,22 @@ type PregnantScreenNavigationProp = StackNavigationProp<
 
 type Props = {
   navigation: PregnantScreenNavigationProp;
+  route: any;
 };
 
-const PregnantScreen: React.FC<Props> = ({ navigation }) => {
+const PregnantScreen: React.FC<Props> = ({ navigation, route }) => {
+  const { basicInfo } = route.params;
+
+  const handleNext = (pregnant: string) => {
+    navigation.navigate('Pressure', { basicInfo, pregnant });
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Are you currently pregnant?</Text>
       <View style={styles.buttonContainer}>
-        <Button title="Yes" onPress={() => navigation.navigate('Pressure')} color="#f0a500" />
-        <Button title="No" onPress={() => navigation.navigate('Pressure')} color="#f0a500" />
+        <Button title="Yes" onPress={() => handleNext('yes')} color="#f0a500" />
+        <Button title="No" onPress={() => handleNext('no')} color="#f0a500" />
       </View>
     </View>
   );

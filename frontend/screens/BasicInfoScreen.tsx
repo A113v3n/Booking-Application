@@ -2,7 +2,7 @@ import React from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from '../navigation/AppNavigator';
+import { RootStackParamList, CustomFormData } from '../navigation/AppNavigator';
 
 type BasicInfoScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -13,23 +13,12 @@ type Props = {
   navigation: BasicInfoScreenNavigationProp;
 };
 
-// Define the type for the form data
-interface FormData {
-  firstName: string;
-  lastName: string;
-  phoneNumber: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-}
-
 const BasicInfoScreen: React.FC<Props> = ({ navigation }) => {
-  const { control, handleSubmit } = useForm<FormData>();
+  const { control, handleSubmit } = useForm<CustomFormData>();
 
-  const onSubmit = (data: FormData) => {
-    // Store data and navigate to next screen
+  const onSubmit = (data: CustomFormData) => {
     console.log(data);
-    navigation.navigate('Pregnant');
+    navigation.navigate('Pregnant', { basicInfo: data });
   };
 
   return (
@@ -84,7 +73,7 @@ const BasicInfoScreen: React.FC<Props> = ({ navigation }) => {
         name="confirmPassword"
         defaultValue=""
       />
-      <Button title="Register" onPress={handleSubmit(onSubmit)} color="#f0a500" />
+      <Button title="Next" onPress={handleSubmit(onSubmit)} color="#f0a500" />
     </View>
   );
 };

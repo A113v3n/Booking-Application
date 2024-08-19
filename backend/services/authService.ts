@@ -98,23 +98,34 @@ export const registerAttendant = async (req: Request, res: Response) => {
 export const registerClient = async (req: Request, res: Response) => {
   const { firstName, lastName, email, password, phoneNumber, pregnant, pressurePreference, painArea } = req.body;
 
-    // Validate required fields
-    if (!email || !password || !firstName || !lastName || pregnant === undefined || !pressurePreference) {
-      return res.status(400).json({ message: 'All fields are required' });
-    }
+  console.log('Received registration data:', req.body); // Log the incoming request data
+
+  if (!firstName || !lastName || !email || !password || !phoneNumber || !pregnant || !pressurePreference || !painArea) {
+    return res.status(400).json({ message: 'All fields are required' });
+  }
 
   try {
     const existingClient = await Client.findOne({ email });
     if (existingClient) return res.status(400).json({ message: 'Client already exists' });
 
     const hashedPassword = await bcrypt.hash(password, 12);
-    const newClient = new Client({ firstName, lastName, email, password: hashedPassword, phoneNumber, pregnant, pressurePreference, painArea, role: 'client' });
+    const newClient = new Client({
+      firstName,
+      lastName,
+      email,
+      password: hashedPassword,
+      phoneNumber,
+      pregnant,
+      pressurePreference,
+      painArea,
+      role: 'client',
+    });
     await newClient.save();
 
     const token = generateToken(newClient._id.toString(), newClient.role);
     res.status(201).json({ result: newClient, token });
   } catch (error) {
+    console.error('Error during client registration:', error); // Log detailed error
     res.status(500).json({ message: 'Something went wrong' });
   }
 };
-

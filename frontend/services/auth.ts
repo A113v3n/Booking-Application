@@ -22,3 +22,12 @@ export const register = async (user: any) => {
     return false;
   }
 };
+export const registerClient = async (data: any) => {
+  try {
+    const response = await api.post('/client/register', data);
+    return { success: true, message: response.data.message };
+  } catch (error: any) {
+    console.error('Registration error:', error);
+    return { success: false, message: error.response?.data?.message || 'Unknown error' };
+  }
+};

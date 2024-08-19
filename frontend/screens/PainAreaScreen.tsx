@@ -1,13 +1,19 @@
-// src/screens/PainAreaScreen.tsx
-import React, { useState, useEffect, useRef } from 'react';
-import { View, Text, Button, StyleSheet, Dimensions } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, Button, StyleSheet, Dimensions, Alert } from 'react-native';
+import { useNavigation, useRoute, RouteProp, NavigationProp } from '@react-navigation/native';
+import { RootStackParamList, CustomFormData } from '../navigation/AppNavigator';
 import InteractiveBodyDiagram from '../components/InteractiveBodyDiagram';
+import { registerClient } from '../services/auth';
 
-const PainAreaScreen = () => {
-  const [selectedAreas, setSelectedAreas] = useState<string[]>([]);
+type PainAreaScreenNavigationProp = NavigationProp<RootStackParamList, 'PainArea'>;
+type PainAreaScreenRouteProp = RouteProp<RootStackParamList, 'PainArea'>;
+
+const PainAreaScreen: React.FC = () => {
+  const [painArea, setPainArea] = useState<string[]>([]);
   const [dimensions, setDimensions] = useState({ width: 300, height: 500 });
-  const navigation = useNavigation();
+  const navigation = useNavigation<PainAreaScreenNavigationProp>();
+  const route = useRoute<PainAreaScreenRouteProp>();
+  const { basicInfo, pregnant, pressurePreference } = route.params;
 
   useEffect(() => {
     const updateDimensions = () => {
@@ -24,10 +30,32 @@ const PainAreaScreen = () => {
   }, []);
 
   const toggleArea = (area: string) => {
-    setSelectedAreas((prev) => {
+    setPainArea((prev: string[]) => {
       const isNewSelection = prev.includes(area);
       return isNewSelection ? prev.filter((a) => a !== area) : [...prev, area];
     });
+  };
+
+  const handleSubmit = async () => {
+    const registrationData = {
+      ...basicInfo,
+      pregnant,
+      pressurePreference,
+      painArea,
+    };
+
+    try {
+      const response = await registerClient(registrationData);
+      if (response.success) {
+        Alert.alert('Registration successful!');
+        navigation.navigate('Home');
+      } else {
+        Alert.alert('Registration failed', response.message);
+      }
+    } catch (error: any) {
+      console.error('Registration error details:', error); // Log detailed error
+      Alert.alert('An error occurred during registration', error.message || 'Unknown error');
+    }
   };
 
   return (
@@ -35,12 +63,12 @@ const PainAreaScreen = () => {
       <Text style={styles.title}>If there is an area you feel pain, please select it. If not, please skip.</Text>
       <View style={styles.diagramContainer}>
         <InteractiveBodyDiagram
-          selectedAreas={selectedAreas}
+          painArea={painArea}
           toggleArea={toggleArea}
           dimensions={dimensions}
         />
       </View>
-      <Button title="Skip" onPress={() => console.log(selectedAreas)} color="#f0a500" />
+      <Button title="Submit" onPress={handleSubmit} color="#f0a500" />
     </View>
   );
 };

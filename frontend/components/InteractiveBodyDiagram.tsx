@@ -4,13 +4,13 @@ import { G, Image, Path, Svg, Rect } from 'react-native-svg';
 import imageData from '../assets/imagebodyPaths'; // Adjust the path as needed
 
 interface InteractiveBodyDiagramProps {
-  selectedAreas: string[];
+  painArea: string[];
   toggleArea: (area: string) => void;
   dimensions: { width: number; height: number };
 }
 
-const InteractiveBodyDiagram: React.FC<InteractiveBodyDiagramProps> = ({ selectedAreas, toggleArea, dimensions }) => {
-  const isSelected = (area: string) => selectedAreas.includes(area);
+const InteractiveBodyDiagram: React.FC<InteractiveBodyDiagramProps> = ({ painArea, toggleArea, dimensions }) => {
+  const isSelected = (area: string) => painArea.includes(area);
 
   return (
     <Svg width={dimensions.width} height={dimensions.height} viewBox="0 0 300 1000">
