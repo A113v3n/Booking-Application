@@ -1,89 +1,97 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Image, ScrollView } from 'react-native';
 import { Calendar } from 'react-native-calendars';
 
 const ClientDashboard = () => {
   return (
-    <ScrollView style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.userName}>Jane D.</Text>
-        {/* Profile Icon */}
-      </View>
-
-      <TouchableOpacity style={styles.bookNowButton}>
-        <Text style={styles.bookNowText}>Book Now</Text>
-      </TouchableOpacity>
-
-      <View style={styles.appointmentSection}>
-        <View style={styles.therapistCard}>
-          <Image
-            source={{ uri: 'https://via.placeholder.com/60' }} // Replace with your image source
-            style={styles.therapistImage}
-          />
-          <Text style={styles.therapistName}>Jill Doe</Text>
-          <Text style={styles.therapistRating}>⭐ 4.9</Text>
+    <ScrollView contentContainerStyle={styles.scrollViewContent}>
+      <View style={styles.container}>
+        {/* Header with user info */}
+        <View style={styles.header}>
+          <Text style={styles.username}>Jane D.</Text>
+          <View style={styles.avatarContainer}>
+            <Image source={{ uri: 'https://via.placeholder.com/60' }} style={styles.avatarImage} />
+          </View>
         </View>
 
-        <View style={styles.appointmentCard}>
-          <Text style={styles.appointmentDate}>14</Text>
-          <Text style={styles.appointmentDay}>Wednesday</Text>
-          <Text style={styles.appointmentMonth}>April</Text>
+        {/* Book Now Button */}
+        <TouchableOpacity style={styles.bookButton}>
+          <Text style={styles.bookButtonText}>Book Now</Text>
+        </TouchableOpacity>
+
+        {/* Appointments Section */}
+        <Text style={styles.sectionTitle}>Appointments</Text>
+        <View style={styles.appointmentsContainer}>
+          <View style={styles.therapistCard}>
+            <Image source={{ uri: 'https://via.placeholder.com/60' }} style={styles.therapistImage} />
+            <Text style={styles.therapistName}>Jill Doe</Text>
+            <Text style={styles.therapistRating}>⭐ 4.9</Text>
+          </View>
+          <View style={styles.dateCard}>
+            <Text style={styles.appointmentDate}>14</Text>
+            <Text style={styles.appointmentDay}>Wednesday</Text>
+            <Text style={styles.appointmentMonth}>April</Text>
+          </View>
         </View>
-      </View>
 
-      <Calendar
-        markedDates={{
-          '2023-04-14': { selected: true, marked: true, selectedColor: '#f0a500' },
-        }}
-        style={styles.calendar}
-        theme={{
-          backgroundColor: '#333',
-          calendarBackground: '#333',
-          textSectionTitleColor: '#fff',
-          monthTextColor: '#f0a500',
-          arrowColor: '#f0a500',
-          dayTextColor: '#fff',
-          todayTextColor: '#f0a500',
-          selectedDayBackgroundColor: '#f0a500',
-          selectedDayTextColor: '#fff',
-          textDisabledColor: '#555',
-          dotColor: '#f0a500',
-          selectedDotColor: '#fff',
-          textDayFontFamily: 'System',
-          textMonthFontFamily: 'System',
-          textDayHeaderFontFamily: 'System',
-          textDayFontWeight: '300',
-          textMonthFontWeight: 'bold',
-          textDayHeaderFontWeight: '500',
-          textDayFontSize: 16,
-          textMonthFontSize: 18,
-          textDayHeaderFontSize: 14,
-          'stylesheet.calendar.header': {
-            week: {
-              marginTop: 5,
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              paddingHorizontal: 10,
-            },
-          },
-        }}
-      />
+        {/* Calendar */}
+        <Calendar
+          style={styles.calendar}
+          theme={{
+            backgroundColor: '#333',
+            calendarBackground: '#333',
+            textSectionTitleColor: '#fff',
+            dayTextColor: '#fff',
+            todayTextColor: '#f0a500',
+            selectedDayTextColor: '#fff',
+            monthTextColor: '#f0a500',
+            arrowColor: '#f0a500',
+            selectedDayBackgroundColor: '#444',
+            textDisabledColor: '#666',
+          }}
+          markedDates={{
+            '2024-08-19': { selected: true, marked: true, selectedColor: '#f0a500' },
+          }}
+        />
 
-      <TouchableOpacity style={styles.menuButton}>
-        <Text style={styles.menuButtonText}>Appointment History</Text>
-      </TouchableOpacity>
+        {/* Menu Buttons */}
+        <TouchableOpacity style={styles.menuButton}>
+          <Text style={styles.menuButtonText}>Appointment History</Text>
+        </TouchableOpacity>
 
-      <TouchableOpacity style={styles.menuButton}>
-        <Text style={styles.menuButtonText}>Favorite Therapist</Text>
-      </TouchableOpacity>
+        <TouchableOpacity style={styles.menuButton}>
+          <Text style={styles.menuButtonText}>Favorite Therapist</Text>
+        </TouchableOpacity>
 
-      <View style={styles.rewardsSection}>
-        <View style={styles.rewardsCard}>
-          <Text style={styles.rewardsPoints}>250 PTS</Text>
+        {/* Rewards and Referral Section */}
+        <View style={styles.rewardsSection}>
+          <View style={styles.rewardsCard}>
+            <Text style={styles.rewardsText}>250</Text>
+            <Text style={styles.rewardsLabel}>PTS</Text>
+          </View>
+          <View style={styles.referCard}>
+            <Text style={styles.referText}>Refer a Friend</Text>
+            <Image source={{ uri: 'https://via.placeholder.com/40' }} style={styles.referIcon} />
+          </View>
         </View>
-        <View style={styles.referCard}>
-          <Text style={styles.referText}>Refer a Friend</Text>
-          {/* Add icon or image here */}
+
+        {/* Bottom Navigation */}
+        <View style={styles.bottomNav}>
+          <TouchableOpacity style={styles.navButton}>
+            <Image source={{ uri: 'https://via.placeholder.com/30' }} style={styles.navIcon} />
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.navButton}>
+            <Image source={{ uri: 'https://via.placeholder.com/30' }} style={styles.navIcon} />
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.navButton}>
+            <Image source={{ uri: 'https://via.placeholder.com/30' }} style={styles.navIcon} />
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.navButton}>
+            <Image source={{ uri: 'https://via.placeholder.com/30' }} style={styles.navIcon} />
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.navButton}>
+            <Image source={{ uri: 'https://via.placeholder.com/30' }} style={styles.navIcon} />
+          </TouchableOpacity>
         </View>
       </View>
     </ScrollView>
@@ -91,90 +99,105 @@ const ClientDashboard = () => {
 };
 
 const styles = StyleSheet.create({
+  scrollViewContent: {
+    flexGrow: 1,
+  },
   container: {
     flex: 1,
-    padding: 16,
     backgroundColor: '#333',
+    padding: 20,
   },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 16,
+    marginBottom: 20,
   },
-  userName: {
-    fontSize: 18,
+  username: {
+    fontSize: 20,
     color: '#fff',
   },
-  bookNowButton: {
-    backgroundColor: '#f0a500',
-    paddingVertical: 12,
+  avatarContainer: {
+    backgroundColor: '#444',
+    borderRadius: 30,
+    padding: 5,
+  },
+  avatarImage: {
+    width: 50,
+    height: 50,
     borderRadius: 25,
-    marginBottom: 16,
-    alignItems: 'center',
   },
-  bookNowText: {
+  bookButton: {
+    backgroundColor: '#f0a500',
+    paddingVertical: 15,
+    borderRadius: 10,
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  bookButtonText: {
     color: '#fff',
     fontSize: 18,
-    fontWeight: 'bold',
   },
-  appointmentSection: {
+  sectionTitle: {
+    fontSize: 18,
+    color: '#fff',
+    marginBottom: 10,
+  },
+  appointmentsContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 16,
+    marginBottom: 20,
   },
   therapistCard: {
-    width: '48%',
     backgroundColor: '#444',
-    padding: 16,
-    borderRadius: 8,
+    borderRadius: 10,
+    padding: 15,
     alignItems: 'center',
+    width: '48%',
   },
   therapistImage: {
     width: 60,
     height: 60,
     borderRadius: 30,
-    marginBottom: 8,
+    marginBottom: 10,
   },
   therapistName: {
-    fontSize: 16,
     color: '#fff',
+    fontSize: 16,
   },
   therapistRating: {
-    fontSize: 14,
     color: '#f0a500',
+    fontSize: 14,
   },
-  appointmentCard: {
-    width: '48%',
+  dateCard: {
     backgroundColor: '#444',
-    padding: 16,
-    borderRadius: 8,
+    borderRadius: 10,
+    padding: 15,
     alignItems: 'center',
+    width: '48%',
   },
   appointmentDate: {
-    fontSize: 32,
     color: '#fff',
+    fontSize: 24,
+    marginBottom: 5,
   },
   appointmentDay: {
-    fontSize: 16,
     color: '#f0a500',
+    fontSize: 16,
   },
   appointmentMonth: {
-    fontSize: 16,
     color: '#fff',
+    fontSize: 14,
   },
   calendar: {
-    marginBottom: 16,
-    borderRadius: 8,
-    backgroundColor: '#444',
-    padding: 10,
+    marginBottom: 20,
   },
   menuButton: {
     backgroundColor: '#444',
-    paddingVertical: 12,
-    paddingHorizontal: 16,
-    borderRadius: 25,
-    marginBottom: 12,
+    paddingVertical: 15,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+    marginBottom: 10,
     alignItems: 'center',
   },
   menuButtonText: {
@@ -184,29 +207,55 @@ const styles = StyleSheet.create({
   rewardsSection: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: 16,
+    marginTop: 20,
   },
   rewardsCard: {
-    width: '48%',
     backgroundColor: '#444',
-    padding: 16,
-    borderRadius: 8,
+    padding: 20,
+    borderRadius: 10,
     alignItems: 'center',
+    justifyContent: 'center',
+    width: '48%',
   },
-  rewardsPoints: {
-    fontSize: 24,
+  rewardsText: {
+    fontSize: 28,
     color: '#f0a500',
   },
+  rewardsLabel: {
+    fontSize: 18,
+    color: '#fff',
+  },
   referCard: {
-    width: '48%',
     backgroundColor: '#444',
-    padding: 16,
-    borderRadius: 8,
+    padding: 20,
+    borderRadius: 10,
     alignItems: 'center',
+    justifyContent: 'center',
+    width: '48%',
   },
   referText: {
-    fontSize: 16,
-    color: '#fff',
+    fontSize: 18,
+    color: '#f0a500',
+    marginBottom: 5,
+  },
+  referIcon: {
+    width: 40,
+    height: 40,
+  },
+  bottomNav: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    paddingVertical: 10,
+    backgroundColor: '#444',
+    borderRadius: 20,
+    marginTop: 20,
+  },
+  navButton: {
+    padding: 10,
+  },
+  navIcon: {
+    width: 30,
+    height: 30,
   },
 });
 
